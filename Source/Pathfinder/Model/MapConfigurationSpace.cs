@@ -7,6 +7,7 @@ namespace Pathfinder.Model
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using Npruehs.GrabBag.RapidlyExploringRandomTrees;
     using Npruehs.GrabBag.Util;
@@ -152,80 +153,26 @@ namespace Pathfinder.Model
         /// </returns>
         private List<MapTile> Bresenham(MapTile t0, MapTile t1)
         {
-            List<MapTile> line = new List<MapTile>();
+            // Get line approximation.
+            var line = Npruehs.GrabBag.Math.Bresenham.Plot(t0.Pos, t1.Pos);
 
-            int x0;
-            int x1;
-            int y0;
-            int y1;
+            // Check if all tiles are walkable.
+            var tiles = new List<MapTile>();
 
-            var steep = Math.Abs(t1.Pos.Y - t0.Pos.Y) > Math.Abs(t1.Pos.X - t0.Pos.X);
-
-            if (steep)
+            foreach (var tile in line.Select(pos => this.Map[pos.X, pos.Y]))
             {
-                // swap(x0, y0)
-                x0 = t0.Pos.Y;
-                y0 = t0.Pos.X;
-
-                // swap(x1, y1)
-                x1 = t1.Pos.Y;
-                y1 = t1.Pos.X;
-            }
-            else
-            {
-                x0 = t0.Pos.X;
-                y0 = t0.Pos.Y;
-
-                x1 = t1.Pos.X;
-                y1 = t1.Pos.Y;
-            }
-
-            if (x0 > x1)
-            {
-                // swap(x0, x1)
-                var tmp = x0;
-                x0 = x1;
-                x1 = tmp;
-
-                // swap(y0, y1)
-                tmp = y0;
-                y0 = y1;
-                y1 = tmp;
-            }
-
-            var deltaX = x1 - x0;
-            var deltaY = Math.Abs(y1 - y0);
-
-            var error = 0d;
-            var deltaErr = deltaY / (double)deltaX;
-
-            var stepY = (y0 < y1) ? 1 : -1;
-            var y = y0;
-
-            for (var x = x0; x <= x1; x++)
-            {
-                var tile = steep ? this.Map[y, x] : this.Map[x, y];
-
                 if (tile.IsWalkable)
                 {
-                    line.Add(tile);
+                    tiles.Add(tile);
                 }
                 else
                 {
-                    line.Clear();
-                    return line;
-                }
-
-                error += deltaErr;
-
-                if (error >= 0.5f)
-                {
-                    y += stepY;
-                    error -= 1.0f;
+                    tiles.Clear();
+                    return tiles;
                 }
             }
 
-            return line;
+            return tiles;
         }
 
         #endregion

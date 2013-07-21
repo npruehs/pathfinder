@@ -33,7 +33,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -45,6 +45,10 @@
     </Reference>
     <Reference Include="Npruehs.GrabBag.Math">
       <HintPath>..\..\Vendor\Npruehs.GrabBag.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="Npruehs.GrabBag.PriorityQueues, Version=2.0.4950.35178, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Vendor\Npruehs.GrabBag.PriorityQueues.dll</HintPath>
     </Reference>
     <Reference Include="Npruehs.GrabBag.RapidlyExploringRandomTrees">
       <HintPath>..\..\Vendor\Npruehs.GrabBag.RapidlyExploringRandomTrees.dll</HintPath>

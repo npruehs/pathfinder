@@ -270,6 +270,24 @@ namespace Pathfinder.Control
         /// </summary>
         public void FindPath()
         {
+            if (this.Map.Start == null)
+            {
+                this.ShowMessage("Set the start tile first!", "No start set!");
+                return;
+            }
+
+            if (this.Map.Finish == null)
+            {
+                this.ShowMessage("Set the finish tile first!", "No finish set!");
+                return;
+            }
+
+            if (this.pathfinder == null)
+            {
+                this.ShowMessage("Select an algorithm first!", "No pathfinder selected!");
+                return;
+            }
+
             // Create new thread.
             BackgroundWorker worker = new BackgroundWorker();
 

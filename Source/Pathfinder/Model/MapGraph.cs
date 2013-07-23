@@ -66,7 +66,7 @@ namespace Pathfinder.Model
 
             if (targetTile.IsWalkable)
             {
-                this.Graph.AddDirectedEdge(tile, targetTile);
+                this.Graph.AddDirectedEdge(tile, targetTile, 1);
             }
         }
 
